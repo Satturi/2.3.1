@@ -11,18 +11,17 @@ import java.util.List;
 
 
 @Component
-@Transactional
+
 public class UsersDAO implements DAO{
 
     private final SessionFactory sessionFactory;
 
-    @Autowired
+
     public UsersDAO(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
     }
 
     @Override
-    @Transactional(readOnly = true)
     public List<Users> index() {
         Session session = sessionFactory.getCurrentSession();
 
@@ -30,19 +29,16 @@ public class UsersDAO implements DAO{
                 .getResultList();
     }
     @Override
-    @Transactional(readOnly = true)
     public Users show(int id) {
         Session session = sessionFactory.getCurrentSession();
         return session.get(Users.class, id);
     }
     @Override
-    @Transactional
     public void save(Users person) {
         Session session = sessionFactory.getCurrentSession();
         session.save(person);
     }
     @Override
-    @Transactional
     public void update(int id, Users updatedPerson) {
         Session session = sessionFactory.getCurrentSession();
         Users personToBeUpdated = session.get(Users.class, id);
@@ -52,7 +48,6 @@ public class UsersDAO implements DAO{
         personToBeUpdated.setEmail(updatedPerson.getEmail());
     }
     @Override
-    @Transactional
     public void delete(int id) {
         Session session = sessionFactory.getCurrentSession();
         session.remove(session.get(Users.class, id));
